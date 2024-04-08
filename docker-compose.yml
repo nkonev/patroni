@@ -63,6 +63,8 @@ services:
         environment:
             <<: *haproxy_env
             PATRONI_NAME: patroni1
+        volumes:
+          - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
 
     patroni2:
         image: ${PATRONI_TEST_IMAGE:-patroni}
@@ -73,6 +75,8 @@ services:
         environment:
             <<: *haproxy_env
             PATRONI_NAME: patroni2
+        volumes:
+          - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
 
     patroni3:
         image: ${PATRONI_TEST_IMAGE:-patroni}
@@ -83,3 +87,7 @@ services:
         environment:
             <<: *haproxy_env
             PATRONI_NAME: patroni3
+        volumes:
+          - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
+
+
