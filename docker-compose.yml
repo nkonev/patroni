@@ -56,6 +56,7 @@ services:
 
     patroni1:
         image: ${PATRONI_TEST_IMAGE:-patroni}
+        user: "0"
         networks: [ demo ]
         env_file: docker/patroni.env
         hostname: patroni1
@@ -64,13 +65,16 @@ services:
             <<: *haproxy_env
             PATRONI_NAME: patroni1
         volumes:
-#          - postgres1_data:/home/postgres/data:z
+          - postgres1_data:/home/postgres/data:z
           - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
           - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
           - ./docker/init.sql:/home/postgres/init.sql:z
+          - ./docker/volume-entrypoint.sh:/volume-entrypoint.sh:z
+        entrypoint: /volume-entrypoint.sh
 
     patroni2:
         image: ${PATRONI_TEST_IMAGE:-patroni}
+        user: "0"
         networks: [ demo ]
         env_file: docker/patroni.env
         hostname: patroni2
@@ -79,13 +83,16 @@ services:
             <<: *haproxy_env
             PATRONI_NAME: patroni2
         volumes:
-#          - postgres2_data:/home/postgres/data:z
+          - postgres2_data:/home/postgres/data:z
           - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
           - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
           - ./docker/init.sql:/home/postgres/init.sql:z
-          
+          - ./docker/volume-entrypoint.sh:/volume-entrypoint.sh:z
+        entrypoint: /volume-entrypoint.sh
+                    
     patroni3:
         image: ${PATRONI_TEST_IMAGE:-patroni}
+        user: "0"
         networks: [ demo ]
         env_file: docker/patroni.env
         hostname: patroni3
@@ -94,11 +101,13 @@ services:
             <<: *haproxy_env
             PATRONI_NAME: patroni3
         volumes:
-#          - postgres3_data:/home/postgres/data:z
+          - postgres3_data:/home/postgres/data:z
           - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
           - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
           - ./docker/init.sql:/home/postgres/init.sql:z
-                    
+          - ./docker/volume-entrypoint.sh:/volume-entrypoint.sh:z
+        entrypoint: /volume-entrypoint.sh
+          
     kafka:
         image: apache/kafka:3.7.0
         networks: [ demo ]
