@@ -1,3 +1,14 @@
+# Patroni
+```bash
+docker exec -ti demo-patroni1 bash
+etcdctl get --keys-only --prefix /service/demo
+etcdctl member list
+
+
+docker exec -ti demo-haproxy bash
+psql -h localhost -p 5000 -U postgres -W
+```
+
 # Replication via Kafka Connect
 ```bash
 # Start the topology as defined in https://debezium.io/documentation/reference/stable/tutorial.html
