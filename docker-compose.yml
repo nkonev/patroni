@@ -66,6 +66,8 @@ services:
         volumes:
 #          - postgres1_data:/home/postgres/data:z
           - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
+          - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
+          - ./docker/init.sql:/home/postgres/init.sql:z
 
     patroni2:
         image: ${PATRONI_TEST_IMAGE:-patroni}
@@ -79,7 +81,9 @@ services:
         volumes:
 #          - postgres2_data:/home/postgres/data:z
           - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
-
+          - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
+          - ./docker/init.sql:/home/postgres/init.sql:z
+          
     patroni3:
         image: ${PATRONI_TEST_IMAGE:-patroni}
         networks: [ demo ]
@@ -92,7 +96,9 @@ services:
         volumes:
 #          - postgres3_data:/home/postgres/data:z
           - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
-
+          - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
+          - ./docker/init.sql:/home/postgres/init.sql:z
+                    
     kafka:
         image: apache/kafka:3.7.0
         networks: [ demo ]
@@ -154,7 +160,7 @@ services:
         restart: unless-stopped
         ports:
           - "8123:8123"
-          - "9000:9000"
+ #         - "9000:9000"
         volumes:
           - clickhouse_data:/var/lib/clickhouse:z
           - ./docker/clickhouse/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:z

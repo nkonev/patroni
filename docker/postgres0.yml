@@ -98,7 +98,7 @@ bootstrap:
   - data-checksums
 
   # Additional script to be launched after initial cluster creation (will be passed the connection URL as parameter)
-# post_init: /usr/local/bin/setup_cluster.sh
+  post_init: /usr/local/bin/setup_cluster.sh
 
 postgresql:
   listen: 0.0.0.0:5432
