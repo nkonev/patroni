@@ -65,9 +65,9 @@ services:
             PATRONI_NAME: patroni1
         volumes:
           - postgres1_data:/home/postgres/data:z
-          - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
-          - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
-          - ./docker/init.sql:/home/postgres/init.sql:z
+          - ./docker/patroni/postgres0.yml:/home/postgres/postgres0.yml:z
+          - ./docker/patroni/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
+          - ./docker/patroni/init.sql:/home/postgres/init.sql:z
 
     patroni2:
         image: ${PATRONI_TEST_IMAGE:-patroni}
@@ -80,9 +80,9 @@ services:
             PATRONI_NAME: patroni2
         volumes:
           - postgres2_data:/home/postgres/data:z
-          - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
-          - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
-          - ./docker/init.sql:/home/postgres/init.sql:z
+          - ./docker/patroni/postgres0.yml:/home/postgres/postgres0.yml:z
+          - ./docker/patroni/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
+          - ./docker/patroni/init.sql:/home/postgres/init.sql:z
                     
     patroni3:
         image: ${PATRONI_TEST_IMAGE:-patroni}
@@ -95,9 +95,9 @@ services:
             PATRONI_NAME: patroni3
         volumes:
           - postgres3_data:/home/postgres/data:z
-          - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
-          - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
-          - ./docker/init.sql:/home/postgres/init.sql:z
+          - ./docker/patroni/postgres0.yml:/home/postgres/postgres0.yml:z
+          - ./docker/patroni/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
+          - ./docker/patroni/init.sql:/home/postgres/init.sql:z
           
     kafka:
         image: apache/kafka:3.7.0
