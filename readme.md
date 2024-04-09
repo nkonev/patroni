@@ -1,7 +1,7 @@
 # Patroni
 ```bash
 docker build -t patroni.original .
-docker build -f Dockerfile.gosu -t patroni .
+docker build -f Dockerfile.patched -t patroni .
 
 docker exec -ti demo-patroni1 bash
 etcdctl get --keys-only --prefix /service/demo

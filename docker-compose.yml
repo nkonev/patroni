@@ -14,7 +14,7 @@ networks:
 
 services:
     etcd1: &etcd
-        image: ${PATRONI_TEST_IMAGE:-patroni}
+        image: ${PATRONI_TEST_IMAGE:-patroni.original}
         networks: [ demo ]
         environment:
             ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
@@ -40,7 +40,7 @@ services:
         command: etcd --name etcd3 --initial-advertise-peer-urls http://etcd3:2380
 
     haproxy:
-        image: ${PATRONI_TEST_IMAGE:-patroni}
+        image: ${PATRONI_TEST_IMAGE:-patroni.original}
         networks: [ demo ]
         env_file: docker/patroni.env
         hostname: haproxy
@@ -56,7 +56,6 @@ services:
 
     patroni1:
         image: ${PATRONI_TEST_IMAGE:-patroni}
-        user: "0"
         networks: [ demo ]
         env_file: docker/patroni.env
         hostname: patroni1
@@ -69,12 +68,9 @@ services:
           - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
           - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
           - ./docker/init.sql:/home/postgres/init.sql:z
-          - ./docker/volume-entrypoint.sh:/volume-entrypoint.sh:z
-        entrypoint: /volume-entrypoint.sh
 
     patroni2:
         image: ${PATRONI_TEST_IMAGE:-patroni}
-        user: "0"
         networks: [ demo ]
         env_file: docker/patroni.env
         hostname: patroni2
@@ -87,12 +83,9 @@ services:
           - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
           - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
           - ./docker/init.sql:/home/postgres/init.sql:z
-          - ./docker/volume-entrypoint.sh:/volume-entrypoint.sh:z
-        entrypoint: /volume-entrypoint.sh
                     
     patroni3:
         image: ${PATRONI_TEST_IMAGE:-patroni}
-        user: "0"
         networks: [ demo ]
         env_file: docker/patroni.env
         hostname: patroni3
@@ -105,8 +98,6 @@ services:
           - ./docker/postgres0.yml:/home/postgres/postgres0.yml:z
           - ./docker/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
           - ./docker/init.sql:/home/postgres/init.sql:z
-          - ./docker/volume-entrypoint.sh:/volume-entrypoint.sh:z
-        entrypoint: /volume-entrypoint.sh
           
     kafka:
         image: apache/kafka:3.7.0
