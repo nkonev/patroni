@@ -42,6 +42,8 @@ docker-compose down
 
 
 # Links
+* https://github.com/zalando/patroni/tree/master/docker
+* https://github.com/zalando/patroni/blob/master/Dockerfile
 * https://patroni.readthedocs.io/en/latest/patroni_configuration.html
 * https://patroni.readthedocs.io/en/latest/yaml_configuration.html#bootstrap-configuration
 * https://github.com/debezium/debezium-examples/tree/main/tutorial#using-postgres
