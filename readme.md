@@ -59,6 +59,11 @@ FROM generate_series(1, 10000000) AS i;
 # then in Clickhouse
 select count(*) from customers;
 -- the answer should be 10000000 + 4
+
+-- results
+1:32:04 - issue insert gen in PG
+1:32:48 - finished insert in PG
+1:41:19 - finished inserting to CH
 ```
 
 -- for tests
