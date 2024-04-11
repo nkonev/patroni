@@ -75,6 +75,7 @@ bootstrap:
       parameters:
         max_connections: 100
         wal_level: logical
+        hot_standby_feedback: "on"
 #        hot_standby: "on"
 #        max_connections: 100
 #        max_worker_processes: 8

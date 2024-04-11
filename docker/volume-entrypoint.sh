@@ -2,6 +2,7 @@
 
 if [ -z "$(ls -A $PGDATA)" ]; then
    echo "PGDATA is empty, going to fix permissions"
+   chown -R postgres:postgres /patroni/postgresql
    chown -R postgres:postgres $PGDATA
    chmod -R 0750 $PGDATA
 else
