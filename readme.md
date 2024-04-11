@@ -45,6 +45,21 @@ select * from customers prewhere deleted = 0 order by version desc limit 1 by id
 # https://clickhouse.com/docs/en/sql-reference/statements/select/limit-by
 select * from customers prewhere deleted = 0 order by version desc limit 1 by id limit 2;
 
+# Load test
+open `docker stats`
+
+# then in haproxy
+INSERT INTO customers (first_name, last_name, email)
+SELECT
+'generated_first_name_' || i,
+'generated_last_name_' || i,
+'generated_user_' || i || '@example.com'
+FROM generate_series(1, 10000000) AS i;
+
+# then in Clickhouse
+select count(*) from customers;
+-- the answer should be 10000000 + 4
+```
 
 -- for tests
 insert into customers_mv(id, first_name, last_name, email) values (1, 'Nikita', 'Konev', 'nkonev@example.com');
