@@ -50,7 +50,7 @@ SELECT
 FROM generate_series(1, 10000000) AS i;
 
 # then in Clickhouse
-select count(*) from customers;
+select count(*) from database1.customers;
 -- the answer should be 10000000 + 4
 
 -- results
