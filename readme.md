@@ -14,15 +14,7 @@ psql -h localhost -p 5000 -U postgres -W
 
 # Replication via Kafka Connect
 ```bash
-# Start the topology as defined in https://debezium.io/documentation/reference/stable/tutorial.html
-docker-compose up -d --build
-
-# Consume messages from a Debezium topic
-docker exec -it kafka /opt/kafka/bin/kafka-console-consumer.sh \
-    --bootstrap-server kafka:9092 \
-    --from-beginning \
-    --property print.key=true \
-    --topic dbserver1.inventory.customers
+docker-compose up -d
 
 # Modify records in the database via Postgres client
 docker exec -it -e PGOPTIONS="--search_path=inventory" demo-haproxy psql -U postgres -h haproxy -p 5000 -d postgres
@@ -32,7 +24,8 @@ delete from customers where id = 1005;
 
 # see in Clickhouse
 docker exec -it clickhouse clickhouse client
-select * from customers;
+select * from database1.customers;
+
 
 optimize table customers final cleanup;
 # or
@@ -66,14 +59,9 @@ select count(*) from customers;
 1:41:19 - finished inserting to CH
 ```
 
--- for tests
-insert into customers_mv(id, first_name, last_name, email) values (1, 'Nikita', 'Konev', 'nkonev@example.com');
-insert into customers_changes(`after.id`, `after.first_name`, `after.last_name`, `after.email`) values (1, 'Nikita', 'Konev', 'nkonev@example.com');
 
 # Shut down the cluster
 docker-compose down
-```
-
 
 # Links
 * https://github.com/zalando/patroni/tree/master/docker
