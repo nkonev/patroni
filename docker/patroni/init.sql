@@ -6,7 +6,7 @@ CREATE TABLE inventory.customers (
     last_name character varying(255) NOT NULL,
     email character varying(255) NOT NULL
 );
-ALTER TABLE ONLY inventory.customers REPLICA IDENTITY FULL;
+
 
 INSERT INTO inventory.customers VALUES (1001, 'Sally', 'Thomas', 'sally.thomas@acme.com');
 INSERT INTO inventory.customers VALUES (1002, 'George', 'Bailey', 'gbailey@foobar.com');

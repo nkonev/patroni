@@ -100,7 +100,7 @@ services:
           - ./docker/patroni/init.sql:/home/postgres/init.sql:z
 
     clickhouse:
-        image: clickhouse/clickhouse-server:23.11.5.29-alpine
+        image: clickhouse/clickhouse-server:24.3.2.23-alpine
         networks: [ demo ]
         container_name: clickhouse
         hostname: clickhouse
