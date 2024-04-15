@@ -87,3 +87,5 @@ docker-compose down
 * https://clickhouse.com/blog/handling-updates-and-deletes-in-clickhouse
 * https://itnext.io/using-postgresql-pgoutput-plugin-for-change-data-capture-with-debezium-on-azure-845d3bb2787a
 * https://github.com/abhirockzz/debezium-postgres-pgoutput
+* https://clickhouse.com/docs/en/engines/database-engines/materialized-postgresql
+* https://patroni.readthedocs.io/en/latest/dynamic_configuration.html
