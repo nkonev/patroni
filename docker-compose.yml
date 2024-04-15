@@ -99,59 +99,6 @@ services:
           - ./docker/patroni/setup_cluster.sh:/usr/local/bin/setup_cluster.sh:z
           - ./docker/patroni/init.sql:/home/postgres/init.sql:z
 
-    kafka:
-        image: apache/kafka:3.7.0
-        networks: [ demo ]
-        restart: unless-stopped
-        container_name: kafka
-        hostname: kafka
-        ports:
-          - "9092:9092"
-        volumes:
-          - kafka_data:/var/lib/kafka:z
-        environment:
-            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
-            KAFKA_ADVERTISED_LISTENERS: 'INTERNAL://kafka:29092,PLAINTEXT_HOST://127.0.0.1:9092'
-            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-            KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-            KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-            KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-            KAFKA_PROCESS_ROLES: 'broker,controller'
-            KAFKA_NODE_ID: 1
-            KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
-            KAFKA_LISTENERS: 'INTERNAL://kafka:29092,CONTROLLER://kafka:29093,PLAINTEXT_HOST://:9092'
-            KAFKA_INTER_BROKER_LISTENER_NAME: 'INTERNAL'
-            KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-            KAFKA_LOG_DIRS: "/var/lib/kafka/data"
-            # Replace CLUSTER_ID with a unique base64 UUID using "bin/kafka-storage.sh random-uuid"
-            # See https://docs.confluent.io/kafka/operations-tools/kafka-tools.html#kafka-storage-sh
-            CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
-
-    # https://hub.docker.com/r/debezium/connect
-    connect:
-        build: ./docker/connect
-        networks: [ demo ]
-        restart: unless-stopped
-        container_name: connect
-        hostname: connect
-        ports:
-          - 8083:8083
-
-        environment:
-            BOOTSTRAP_SERVERS: kafka:29092
-            GROUP_ID: 1
-            CONFIG_STORAGE_TOPIC: my_connect_configs
-            OFFSET_STORAGE_TOPIC: my_connect_offsets
-            STATUS_STORAGE_TOPIC: my_connect_statuses
-    create-debezium-connectors:
-        image: curlimages/curl:8.6.0
-        networks: [ demo ]
-        container_name: create-debezium-connectors
-        hostname: create-debezium-connectors
-        restart: on-failure
-        volumes:
-          - ./docker/create-debezium-connectors:/opt/create-debezium-connectors:z
-        entrypoint: ['/bin/sh', '/opt/create-debezium-connectors/create.sh']
     clickhouse:
         image: clickhouse/clickhouse-server:23.11.5.29-alpine
         networks: [ demo ]
@@ -173,7 +120,6 @@ volumes:
     postgres1_data:
     postgres2_data:
     postgres3_data:
-    kafka_data:
     clickhouse_data:
 
 
