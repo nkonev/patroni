@@ -1,6 +1,0 @@
-class Node:
-    @property
-    def id(self) -> str: ...
-class TCPNode(Node):
-    @property
-    def host(self) -> str: ...

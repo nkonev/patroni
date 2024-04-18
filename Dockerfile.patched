@@ -1,8 +1,0 @@
-FROM patroni.original
-# https://github.com/docker-library/postgres/blob/ab6925051ca097d415816928a50c483ecc370c00/16/bookworm/Dockerfile
-ENV GOSU_VERSION 1.17
-ENV dpkgArch amd64
-USER root
-RUN wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch"; chmod +x /usr/local/bin/gosu;
-COPY ./docker/volume-entrypoint.sh /volume-entrypoint.sh
-ENTRYPOINT ["/volume-entrypoint.sh"]
