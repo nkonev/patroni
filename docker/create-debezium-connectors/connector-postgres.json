@@ -11,6 +11,7 @@
         "database.dbname" : "postgres",
         "topic.prefix": "dbserver1",
         "schema.include.list": "inventory",
+        "max.retries": "40",
         "key.converter": "org.apache.kafka.connect.json.JsonConverter",
         "value.converter": "org.apache.kafka.connect.json.JsonConverter",
         "key.converter.schemas.enable": "false",
