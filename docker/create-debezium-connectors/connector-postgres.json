@@ -3,6 +3,7 @@
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
         "plugin.name": "pgoutput",
+        "table.include.list": "inventory.customers_europe,inventory.customers_asia,inventory.customers_americas",
         "tasks.max": "1",
         "database.hostname": "haproxy",
         "database.port": "5000",
@@ -15,7 +16,19 @@
         "key.converter": "org.apache.kafka.connect.json.JsonConverter",
         "value.converter": "org.apache.kafka.connect.json.JsonConverter",
         "key.converter.schemas.enable": "false",
-        "value.converter.schemas.enable": "false"
+        "value.converter.schemas.enable": "false",
+
+        "tombstones.on.delete": "false",
+
+        "slot.name": "my_persistent_debezium_slot",
+        "publication.name": "my_dbz_publication",
+
+        "transforms": "Reroute",
+        "transforms.Reroute.type": "io.debezium.transforms.ByLogicalTableRouter",
+        "transforms.Reroute.topic.regex": "(.*)customers_(.*)",
+        "transforms.Reroute.topic.replacement": "$1customers",
+
+        "transforms.Reroute.key.enforce.uniqueness": "false"
     }
 }
 
